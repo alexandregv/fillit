@@ -6,11 +6,61 @@
 /*   By: achoquel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 13:25:51 by achoquel          #+#    #+#             */
-/*   Updated: 2018/12/05 14:08:56 by achoquel         ###   ########.fr       */
+/*   Updated: 2018/12/05 15:00:44 by aguiot--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
+
+int	check_all_tetriminos(char *map)
+{
+	char	*tetri;
+	int		i;
+	
+	i = 0;
+	while (map[i])
+	{
+		tetri = ft_strsub(map, i, 20);
+		if (check_tetrimino(tetri) == 1)
+			return (1);
+		i += 21;
+	}
+	return (0);
+}
+
+int	check_tetrimino(char *grid)
+{
+	int	parts;
+
+	parts = 0;
+	while (*grid)
+	{
+		if (*grid == '#')
+		{
+			if (parts == 4)
+			{
+				return (1);
+			}
+			if (	   *(grid + 1) == '#' 
+					|| *(grid - 1) == '#' 
+					|| *(grid + 5) == '#' 
+					|| *(grid - 5) == '#')
+			{
+				++parts;
+				write(1, "valide\n", 7);
+			}
+			else
+			{
+				write(1, "INVALIDE\n", 9);
+				return (1);
+			}
+		}
+		++grid;
+	}
+	if (parts < 4)
+		return (1);
+	return (0);
+}
 
 int		ft_check_line(char *line, int nline)
 {
@@ -73,6 +123,8 @@ int	main(int ac, char **av)
 		printf("Fichier non compatible\n");
 		return (0);
 	}
+	if (check_all_tetriminos(map) == 1)
+		printf("error");
 	printf("Fichier :\n%s", map);
 	return (0);
 }
