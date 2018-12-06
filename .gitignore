@@ -1,2 +1,7 @@
 tetrigen/
 a.out
+libft/libft.a
+*.o
+*.a
+*.out
+fillit

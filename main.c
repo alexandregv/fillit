@@ -6,125 +6,95 @@
 /*   By: achoquel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 13:25:51 by achoquel          #+#    #+#             */
-/*   Updated: 2018/12/05 15:00:44 by aguiot--         ###   ########.fr       */
+/*   Updated: 2018/12/06 18:27:53 by aguiot--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
-int	check_all_tetriminos(char *map)
+static int	error()
 {
-	char	*tetri;
+	ft_putendl("error");
+	return (1);
+}
+
+void	print_bits(unsigned short octet)
+{
+	int	i;
+
+	i = 0b1000000000000000;
+	ft_putchar('\n');
+	while (octet >= 0 && i)
+	{
+		(octet / i) ? write(1, "1", 1) : write(1, "0", 1);
+		(octet / i) ? octet -= i : 0;
+		i /= 2;
+	}
+	ft_putchar('\n');
+}
+
+int 	init_tetri_list(t_tetri *tetri_list, char *tetri_map)
+{
 	int		i;
-	
-	i = 0;
-	while (map[i])
-	{
-		tetri = ft_strsub(map, i, 20);
-		if (check_tetrimino(tetri) == 1)
-			return (1);
-		i += 21;
-	}
-	return (0);
-}
+	int		j;
+	t_tetri	*curr_tetri;
+	t_tetri	*tmp;
 
-int	check_tetrimino(char *grid)
-{
-	int	parts;
-
-	parts = 0;
-	while (*grid)
-	{
-		if (*grid == '#')
-		{
-			if (parts == 4)
-			{
-				return (1);
-			}
-			if (	   *(grid + 1) == '#' 
-					|| *(grid - 1) == '#' 
-					|| *(grid + 5) == '#' 
-					|| *(grid - 5) == '#')
-			{
-				++parts;
-				write(1, "valide\n", 7);
-			}
-			else
-			{
-				write(1, "INVALIDE\n", 9);
-				return (1);
-			}
-		}
-		++grid;
-	}
-	if (parts < 4)
+	if ((curr_tetri = (t_tetri*)malloc(sizeof(t_tetri))) == NULL)
 		return (1);
-	return (0);
-}
-
-int		ft_check_line(char *line, int nline)
-{
-	int	pos;
-
-	pos = 0;
-	if (nline > 0 && nline % 5 == 0)
+	curr_tetri->letter = 'A';
+	curr_tetri->next = NULL;
+	
+	i = 1;
+	j = 0;
+	ft_putstr("[");
+	ft_putstr(tetri_map);
+	ft_putstr("]\n");
+	while (tetri_map[i - 1])
 	{
-		if (ft_strcmp(line, "") != 0)
-			return (-1);
-	}
-	else
-	{
-		if (line[4] != '\0')
-			return (-1);
-		while (pos < 4)
+		if (tetri_map[i - 1] == '#')
 		{
-			if (line[pos] == '.' || line[pos] == '#')
-				pos++;
-			else
-				return (-1);
+			printf("%c\n", curr_tetri->letter);
+			curr_tetri->bits |= 1 << (i - 1);
 		}
+		if (i % 16 == 0)
+		{
+			++j;
+			ft_putstr("on change de tetri");
+			print_bits(curr_tetri->bits);
+			tmp = lstnew('A' + j);
+			//print_bits(tmp->bits);
+			tmp->next = curr_tetri;
+			curr_tetri = tmp;
+			//printf("%c\n", curr_tetri->letter);
+			if (!curr_tetri->next)
+				return (1);
+		}
+		++i;
 	}
+	//printf("\nbits = %d\n", curr_tetri->bits);
 	return (0);
 }
 
-int		ft_check_file(int fd, char **map)
+int			main(int ac, char **av)
 {
-	char	*line;
-	int		nline;
-	int		gnl;
+	char	**map;
+	char	*tetri_map;
+	t_tetri	*tetri_list;
 
-	if (!(line = ft_strnew(0)) || !(*map = ft_strnew(0)))
-		return (-1);
-	nline = 1;
-	while ((gnl = get_next_line(fd, &line)) > 0)
+	if (ac != 2)
 	{
-		if (ft_check_line(line, nline) == -1)
-			return (-1);
-		*map = ft_strjoin(*map, line);
-		*map = ft_strjoin(*map, "\n");
-		nline++;
+		ft_putendl("usage: ./fillit [file]");
+		return (1);
 	}
-	close(fd);
-	if (nline == 1 && gnl == 0)
-		return (-1);
-	if (gnl == -1)
-		return (-1);
-	return (0);
-}
-
-int	main(int ac, char **av)
-{
-	int fd;
-	char	*map;
-
-	fd = open(av[1], O_RDONLY);
-	if (ft_check_file(fd, &map) == -1)
-	{
-		printf("Fichier non compatible\n");
-		return (0);
-	}
-	if (check_all_tetriminos(map) == 1)
-		printf("error");
-	printf("Fichier :\n%s", map);
+	tetri_map = NULL;
+	map = NULL;
+	if (check_errors(av[1], &tetri_map) != 0)
+		return (error());
+	init_map(map);
+	init_tetri_list(tetri_list, tetri_map);
+	ft_putnbr(tetri_list->bits);
+	//solve_fillit(tetri_list, map);
+	//print_map(map);
 	return (0);
 }

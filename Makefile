@@ -6,24 +6,24 @@
 #    By: achoquel <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/06 12:01:01 by achoquel          #+#    #+#              #
-#    Updated: 2018/12/06 12:14:31 by achoquel         ###   ########.fr        #
+#    Updated: 2018/12/06 15:47:06 by aguiot--         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	= fillit
 
-SRCS	=	main.c			\
-			fichier.c		\
-			fichier.c		\
-			fichier.c
+SRCS	=	main.c		\
+			errors.c	\
+			map.c		\
+			lists.c		\
 
 OBJS	= 	$(SRCS:.c=.o)
 
-CC		=	cc
+CC		=	gcc
 
 CFLAGS	+=	-Wall -Wextra -Werror
-
-LIB		=	-L. -lft
+CFLAGS = 
+LIB		=	-L./libft/ -lft
 
 RM		=	/bin/rm -f
 

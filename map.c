@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   map.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aguiot-- <aguiot--@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/12/06 13:55:24 by aguiot--          #+#    #+#             */
+/*   Updated: 2018/12/06 14:11:05 by aguiot--         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fillit.h"
 
-char	**new_map(int size)
+char		**new_map(int size)
 {
 	char	**map;
 	int		x;
@@ -64,7 +76,7 @@ void	clear_map(char **map)
 	}
 }
 
-int		ft_is_map_full(char **map)
+int		is_map_full(char **map)
 {
 	int	holes;
 	int	x;
@@ -111,13 +123,9 @@ int		start_size(int tcount)
 		return (10);
 }
 
-int	main()
+int			init_map(char **map)
 {
-	char **map;
-	int	res;
-
-	map = new_map(6);
-	ft_is_map_full(map);
-	print_map((char **)map);
+	map = new_map(start_size(2)); //TODO: changer 2 en tcount
+	is_map_full(map);
 	return (0);
 }
