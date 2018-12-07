@@ -1,14 +1,16 @@
 #include "fillit.h"
 
-short	topleft(short byte)
+unsigned short	topleft(unsigned short bits)
 {
 	int		i;
+	int		bit;
 
-	i = 16;
-	if (((byte & (1 << 0) ? 1 : 0)) == 1)
-		return (byte);
-	while (((byte & (1 << i)) ? 1 : 0) != 1)
-		i--;
-	byte = byte >> (16 - (i + 1));
-	return (byte);
+	i = 0;
+	while (i != 15 && bit != 1)
+	{
+		bit = (bits & (1 << i)) ? 1 : 0;
+		i++;
+	}
+	bits = bits >> (i - 1);
+	return (bits);
 }
