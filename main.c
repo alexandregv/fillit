@@ -6,7 +6,7 @@
 /*   By: achoquel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 13:25:51 by achoquel          #+#    #+#             */
-/*   Updated: 2018/12/06 18:27:53 by aguiot--         ###   ########.fr       */
+/*   Updated: 2018/12/07 11:52:46 by achoquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,42 +37,30 @@ int 	init_tetri_list(t_tetri *tetri_list, char *tetri_map)
 {
 	int		i;
 	int		j;
-	t_tetri	*curr_tetri;
+	t_tetri	*head;
 	t_tetri	*tmp;
 
-	if ((curr_tetri = (t_tetri*)malloc(sizeof(t_tetri))) == NULL)
-		return (1);
-	curr_tetri->letter = 'A';
-	curr_tetri->next = NULL;
-	
-	i = 1;
+	head = tetri_list;
+	tetri_list->letter = 'A';
+	tetri_list->next = NULL;
+	i = 0;
 	j = 0;
-	ft_putstr("[");
 	ft_putstr(tetri_map);
-	ft_putstr("]\n");
-	while (tetri_map[i - 1])
+	while (tetri_map[i])
 	{
-		if (tetri_map[i - 1] == '#')
+		if (tetri_map[i] == '#')
+			tetri_list->bits |= 1 << (i - (j * 16));
+		if (i > 0 && i % 16 == 0)
 		{
-			printf("%c\n", curr_tetri->letter);
-			curr_tetri->bits |= 1 << (i - 1);
-		}
-		if (i % 16 == 0)
-		{
+			print_bits(tetri_list->bits);
 			++j;
-			ft_putstr("on change de tetri");
-			print_bits(curr_tetri->bits);
 			tmp = lstnew('A' + j);
-			//print_bits(tmp->bits);
-			tmp->next = curr_tetri;
-			curr_tetri = tmp;
-			//printf("%c\n", curr_tetri->letter);
-			if (!curr_tetri->next)
-				return (1);
+			lstadd(&head, tmp);
+			tetri_list = head;
 		}
 		++i;
 	}
-	//printf("\nbits = %d\n", curr_tetri->bits);
+	print_bits(tetri_list->bits);
 	return (0);
 }
 
@@ -92,8 +80,10 @@ int			main(int ac, char **av)
 	if (check_errors(av[1], &tetri_map) != 0)
 		return (error());
 	init_map(map);
+	tetri_list = (t_tetri *)malloc(sizeof(t_tetri));
 	init_tetri_list(tetri_list, tetri_map);
-	ft_putnbr(tetri_list->bits);
+	ft_putnbr(tetri_list->bits);// CAUSE SEGFAULT PCK TETRI_LIST PAS INIT
+	ft_putstr("\n");
 	//solve_fillit(tetri_list, map);
 	//print_map(map);
 	return (0);
