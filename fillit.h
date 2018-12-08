@@ -6,7 +6,7 @@
 /*   By: achoquel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 11:19:03 by achoquel          #+#    #+#             */
-/*   Updated: 2018/12/07 11:18:57 by achoquel         ###   ########.fr       */
+/*   Updated: 2018/12/07 13:34:32 by aguiot--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,9 @@ char	**new_map(int size);
 void	print_map(char **map);
 void	clear_map(char **map);
 int		init_map(char **map);
-void	init_fillit(t_tetri **tetri_list, char *map);
+int		init_tetri_list(t_tetri *tetri_list, char *tetri_map);
 t_tetri	*lstnew(char letter);
 void	lstadd(t_tetri **alst, t_tetri *newelem);
+unsigned short topleft(unsigned short bits);
 
 #endif

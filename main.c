@@ -6,7 +6,7 @@
 /*   By: achoquel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 13:25:51 by achoquel          #+#    #+#             */
-/*   Updated: 2018/12/07 11:52:46 by achoquel         ###   ########.fr       */
+/*   Updated: 2018/12/07 17:26:29 by aguiot--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,35 +33,24 @@ void	print_bits(unsigned short octet)
 	ft_putchar('\n');
 }
 
-int 	init_tetri_list(t_tetri *tetri_list, char *tetri_map)
+void	print_chars(unsigned short octet)
 {
 	int		i;
 	int		j;
-	t_tetri	*head;
-	t_tetri	*tmp;
+	char	*str;
 
-	head = tetri_list;
-	tetri_list->letter = 'A';
-	tetri_list->next = NULL;
-	i = 0;
-	j = 0;
-	ft_putstr(tetri_map);
-	while (tetri_map[i])
+	i = 0b1000000000000000;
+	j = 15;
+	str = (char*)malloc(sizeof(char) * 17);
+	while (octet >= 0 && i)
 	{
-		if (tetri_map[i] == '#')
-			tetri_list->bits |= 1 << (i - (j * 16));
-		if (i > 0 && i % 16 == 0)
-		{
-			print_bits(tetri_list->bits);
-			++j;
-			tmp = lstnew('A' + j);
-			lstadd(&head, tmp);
-			tetri_list = head;
-		}
-		++i;
+		str[j] = (octet / i) ? '#': '.';
+		(octet / i) ? octet -= i : 0;
+		i /= 2;
+		--j;
 	}
-	print_bits(tetri_list->bits);
-	return (0);
+	ft_putstr(str);
+	ft_putchar('\n');
 }
 
 int			main(int ac, char **av)
@@ -86,5 +75,6 @@ int			main(int ac, char **av)
 	ft_putstr("\n");
 	//solve_fillit(tetri_list, map);
 	//print_map(map);
+	while (1);
 	return (0);
 }
