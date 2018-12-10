@@ -6,7 +6,7 @@
 /*   By: aguiot-- <aguiot--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 13:32:53 by aguiot--          #+#    #+#             */
-/*   Updated: 2018/12/07 17:28:42 by aguiot--         ###   ########.fr       */
+/*   Updated: 2018/12/10 13:00:12 by aguiot--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ static int		check_file(int fd, char **tetri_map)
 	nline = 1;
 	while ((gnl = get_next_line(fd, &line)) > 0)
 	{
-
 		if (check_line(line, nline) == -1)
 			return (-1);
 		char *tmp = *tetri_map;
@@ -65,32 +64,29 @@ static int		check_file(int fd, char **tetri_map)
 	return (0);
 }
 
-static int	check_tetrimino(char *grid)
+int		check_tetrimino(char *grid)
 {
-	int		parts;
+	int	conn;
+	int	i;
 
-	parts = 0;
-	while (*grid)
+	conn = 0;
+	i = 0;
+	while (grid[i] && i < 16)
 	{
-		if (*grid == '#')
+		if (grid[i] == '#')
 		{
-			if (parts == 4)
-			{
-				return (1);
-			}
-			if (	   *(grid + 1) == '#' 
-					|| *(grid - 1) == '#' 
-					|| *(grid + 4) == '#' 
-					|| *(grid - 4) == '#')
-				++parts;
-			else
-				return (1);
+			if ((i + 1 % 4 != 0) && (i + 1 < 16) && grid[i + 1] == '#')
+				++conn;
+			if ((i % 4 != 0) && (i - 1 >= 0) && grid[i - 1] == '#')
+				++conn;
+			if ((i + 4 < 16) && grid[i + 4] == '#')
+				++conn;
+			if ((i - 4 >= 0) && grid[i - 4] == '#')
+				++conn;
 		}
-		++grid;
+		++i;
 	}
-	if (parts < 4)
-		return (1);
-	return (0);
+	return (conn != 6 && conn != 8);
 }
 
 static int	check_all_tetriminos(char *tetri_map)
