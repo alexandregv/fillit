@@ -6,7 +6,7 @@
 /*   By: achoquel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/10 11:04:07 by achoquel          #+#    #+#             */
-/*   Updated: 2018/12/10 13:05:34 by achoquel         ###   ########.fr       */
+/*   Updated: 2018/12/10 13:37:26 by achoquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,19 @@ static int	check_file(int fd, char **tetri_map)
 	return (0);
 }
 
+void	removeit(char *map, char letter)
+{
+	int	x;
+
+	x = 0;
+	while (map[x])
+	{
+		if (map[x] == letter)
+			map[x] = '.';
+		x++;
+	}
+}
+
 void	topleftit(char **tetri)
 {
 	char	*tmp;
@@ -83,4 +96,32 @@ void	topleftit(char **tetri)
 	else
 		*tetri = ft_strdup(tmp);
 	free(tmp);
+}
+
+
+void	printit(char *map, int size)
+{
+	int	x;
+
+	x = 1;
+	while (*map)
+	{
+		ft_putchar(*map);
+		if (x % size == 0)
+			ft_putchar('\n');
+		x++;
+		map++;
+	}
+}
+
+int	main()
+{
+	char	*map;
+	char	letter = 'A';
+
+	map = ft_strdup(".........................");
+	printit(map, 5);
+	return (0);
+
+
 }
