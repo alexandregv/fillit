@@ -6,7 +6,7 @@
 /*   By: achoquel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 13:25:51 by achoquel          #+#    #+#             */
-/*   Updated: 2018/12/08 12:29:08 by aguiot--         ###   ########.fr       */
+/*   Updated: 2018/12/10 14:00:38 by aguiot--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,41 +16,6 @@ static int	error()
 {
 	ft_putendl("error");
 	return (1);
-}
-
-void	print_bits(unsigned short octet)
-{
-	int	i;
-
-	i = 0b1000000000000000;
-	ft_putchar('\n');
-	while (octet >= 0 && i)
-	{
-		(octet / i) ? write(1, "1", 1) : write(1, "0", 1);
-		(octet / i) ? octet -= i : 0;
-		i /= 2;
-	}
-	ft_putchar('\n');
-}
-
-void	print_chars(unsigned short octet)
-{
-	int		i;
-	int		j;
-	char	*str;
-
-	i = 0b1000000000000000;
-	j = 15;
-	str = (char*)malloc(sizeof(char) * 17);
-	while (octet >= 0 && i)
-	{
-		str[j] = (octet / i) ? '#': '.';
-		(octet / i) ? octet -= i : 0;
-		i /= 2;
-		--j;
-	}
-	ft_putstr(str);
-	ft_putchar('\n');
 }
 
 int			main(int ac, char **av)

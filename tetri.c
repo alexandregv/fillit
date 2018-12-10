@@ -6,39 +6,56 @@
 /*   By: aguiot-- <aguiot--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 13:30:53 by aguiot--          #+#    #+#             */
-/*   Updated: 2018/12/08 12:42:50 by aguiot--         ###   ########.fr       */
+/*   Updated: 2018/12/10 15:20:30 by aguiot--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
+void	remove_tetri(char *map, char letter)
+{
+	int	x;
+
+	x = 0;
+	while (map[x])
+	{
+		if (map[x] == letter)
+			map[x] = '.';
+		x++;
+	}
+}
+
+static void	topleft(char **tetri)
+{
+	*tetri = ft_strtrim(*tetri);
+	if (ft_strcmp(*tetri, "#..##...#") == 0)
+		*tetri = ft_strdup(".#..##...#");
+	else if (ft_strcmp(*tetri, "##.##") == 0)
+		*tetri = ft_strdup(".##.##");
+	else if (ft_strcmp(*tetri, "#..##..#") == 0)
+		*tetri = ft_strdup(".#..##..#");
+	else if (ft_strcmp(*tetri, "#.###") == 0)
+		*tetri = ft_strdup("..#.###");
+	else if (ft_strcmp(*tetri, "#...#..##") == 0)
+		*tetri = ft_strdup(".#...#..##");
+	else if (ft_strcmp(*tetri, "#..###") == 0)
+		*tetri = ft_strdup(".#..###");
+}
+
 int 	init_tetri_list(t_tetri tetri_list[], char *tetri_map)
 {
-	int		i;
-	int		j;
-	t_tetri	*tmp;
+	int	i;
+	int	j;
 
-	tetri_list[0].letter = 'A';
 	i = 0;
 	j = 0;
-	ft_putstr(tetri_map);
-	while (tetri_map[i])
+	while (tetri_map[j])
 	{
-		if (tetri_map[i] == '#')
-			tetri_list[j].bits |= 1 << (i - (j * 16));
-		if (i > 0 && i % 16 == 0)
-		{
-			print_bits(tetri_list[j].bits);
-			tetri_list[j].bits = topleft(tetri_list[j].bits);
-			print_bits(tetri_list[j].bits);
-			print_chars(tetri_list[j].bits);
-			++j;
-			tetri_list[j] = new_tetri('A' + j);
-		}
+		tetri_list[i].letter = 'A' + i;
+		tetri_list[i].tetri  = ft_strsub(tetri_map, j, 16);
+		topleft(&tetri_list[i].tetri);
 		++i;
+		j += 16;
 	}
-	tetri_list[j].bits = topleft(tetri_list[j].bits);
-	print_bits(tetri_list[j].bits);
-	print_chars(tetri_list[j].bits);
 	return (0);
 }
