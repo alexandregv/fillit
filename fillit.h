@@ -6,7 +6,7 @@
 /*   By: achoquel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 11:19:03 by achoquel          #+#    #+#             */
-/*   Updated: 2018/12/10 15:17:58 by aguiot--         ###   ########.fr       */
+/*   Updated: 2018/12/10 17:43:33 by aguiot--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,12 @@ typedef struct	s_tetri {
 	char		letter;
 }				t_tetri;
 
+int				error(void);
 int				check_errors(char *path, char **tetri_map);
 char			**new_map(int size);
-void			print_map(char *map, int size);
+void			print_map(char **map);
 void			clear_map(char **map);
-int				init_map(char **map);
 int				init_tetri_list(t_tetri tetri_list[], char *tetri_map);
 int				check_tetrimino(char *grid);
-void			remove_tetri(char *map, char letter);
-
+char			**solve(t_tetri tetri_list[], int size);
 #endif

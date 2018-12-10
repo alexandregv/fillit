@@ -6,24 +6,11 @@
 /*   By: aguiot-- <aguiot--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 13:30:53 by aguiot--          #+#    #+#             */
-/*   Updated: 2018/12/10 15:20:30 by aguiot--         ###   ########.fr       */
+/*   Updated: 2018/12/10 16:43:23 by aguiot--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
-
-void	remove_tetri(char *map, char letter)
-{
-	int	x;
-
-	x = 0;
-	while (map[x])
-	{
-		if (map[x] == letter)
-			map[x] = '.';
-		x++;
-	}
-}
 
 static void	topleft(char **tetri)
 {
@@ -57,5 +44,5 @@ int 	init_tetri_list(t_tetri tetri_list[], char *tetri_map)
 		++i;
 		j += 16;
 	}
-	return (0);
+	return (i);
 }
