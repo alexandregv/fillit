@@ -6,11 +6,11 @@
 /*   By: aguiot-- <aguiot--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 17:03:34 by aguiot--          #+#    #+#             */
-/*   Updated: 2018/12/07 17:30:20 by aguiot--         ###   ########.fr       */
+/*   Updated: 2018/12/10 13:00:50 by aguiot--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	backtrack(t_tetris *tetri_list, char *map)
+int	backtrack(t_tetris tetri_list[], char *map)
 {
 	int	comp;
 	int	i;
@@ -21,8 +21,7 @@ int	backtrack(t_tetris *tetri_list, char *map)
 	{
 		quelquechose = tetri_list->bits & comp;
 		if (qqchose == 0)
-	icoudsalfjhbgloijf r;
-		break ;
+			break ;
 		tetri_list->next->bits = tetri_list->next->bits << 1;
 		++i;
 	}
@@ -45,5 +44,3 @@ int	backtrack(t_tetris *tetri_list, char *map)
 	}
 	return (0);
 }
-
-

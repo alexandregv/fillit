@@ -6,7 +6,7 @@
 /*   By: achoquel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 13:25:51 by achoquel          #+#    #+#             */
-/*   Updated: 2018/12/07 17:26:29 by aguiot--         ###   ########.fr       */
+/*   Updated: 2018/12/08 12:29:08 by aguiot--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,24 +57,22 @@ int			main(int ac, char **av)
 {
 	char	**map;
 	char	*tetri_map;
-	t_tetri	*tetri_list;
+	t_tetri	tetri_list[26 + 1];
 
 	if (ac != 2)
 	{
 		ft_putendl("usage: ./fillit [file]");
 		return (1);
 	}
-	tetri_map = NULL;
+	ft_bzero(tetri_list, sizeof(t_tetri) * (26 + 1));
 	map = NULL;
 	if (check_errors(av[1], &tetri_map) != 0)
 		return (error());
 	init_map(map);
-	tetri_list = (t_tetri *)malloc(sizeof(t_tetri));
 	init_tetri_list(tetri_list, tetri_map);
-	ft_putnbr(tetri_list->bits);// CAUSE SEGFAULT PCK TETRI_LIST PAS INIT
+	//ft_putnbr(tetri_list->bits);// CAUSE SEGFAULT PCK TETRI_LIST PAS INIT
 	ft_putstr("\n");
 	//solve_fillit(tetri_list, map);
 	//print_map(map);
-	while (1);
 	return (0);
 }
