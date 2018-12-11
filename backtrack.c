@@ -14,46 +14,64 @@
 
 void			remove_tetri(char **map, char letter)
 {
-int    x;
+	int    x;
 	int    y;
 
-	x = 0;
 	y = 0;
-	while (map[x])
+	while (map[y])
 	{
-		while (map[x][y])
+		x = 0;
+		while (map[y][x])
 		{
-			if (map[x][y] == letter)
-			map[x][y] = '.';
-			++y;
+			if (map[y][x] == letter)
+			map[y][x] = '.';
+			++x;
 		}
-		y = 0;
-		++x;
+		++y;
 	}
 }
 
-int			is_placable(char **map, t_tetri tetri, int x, int y)
+int			is_placable(char **map, int size, t_tetri tetri, int xx, int yy)
 {
-	int	xtetri;
+	int	i;
+	int x;
+	int y;
 
-	xtetri = 0;
+	i = 0;
 	if (tetri.tetri[0] == '.' && tetri.tetri[1] == '.')
-		xtetri += 2;
+		i += 2;
 	else if (tetri.tetri[0] == '.')
-		++xtetri;
-	
-	while (map[x])
+		++i;
+
+	y = yy;	
+	while (map[y])
 	{
-		while (map[x][y])
+		x = xx;
+		while (map[y][x + (size - 4)])
 		{
-			if (map[x][y]== '.' && tetri.tetri[xtetri]	== '#')
-				++xtetri;
-			++y;
-			if (tetri.tetri[xtetri] == '\0')
+			printf("map[y][x]=%c | tetri[i]=%c | y=%d | x=%d | i=%d", map[y][x], tetri.tetri[i], y, x, i);
+			if (map[y][x] == '.' && tetri.tetri[i] == '#')
+			{
+				map[y][x] = tetri.letter;
+				printf(" ✔️  case placable");
+			}
+			else if (tetri.tetri[i] == '#')
+			{
+				printf(" ❌ case non placable");
+				remove_tetri(map, tetri.letter);
+				return (0);
+			}
+			printf("\n");
+			++x;
+			++i;
+			if (tetri.tetri[i] == '\0')
+			{
+				ft_putendl("fin");
 				return (1);
+			}
 		}
-		y = 0;
-		++x;
+		printf("---------------------\n");
+		++y;
 	}
 	return (0);
 }
@@ -71,7 +89,7 @@ int	backtrack(char **map, t_tetri tetri_list[])
 char	**solve(t_tetri tetri_list[], int size)
 {
 	char	**map;
-
+setbuf(stdout, NULL); //pour debug printf
 	if (!(map = new_map(size)))
 		error();
 	/*if (backtrack(map, tetri_list))
@@ -81,9 +99,26 @@ char	**solve(t_tetri tetri_list[], int size)
 		clear_map(map);
 		return (0);
 	}*/
-	if (is_placable(map, tetri_list[0], 0, 0))
-		ft_putendl("YEAY");
+	ft_putendl(tetri_list[0].tetri);
+	if (is_placable(map, size, tetri_list[0], 0, 0))
+		printf("🆗 TETRI PLACE\n");
 	else
-		ft_putendl("NOOOOOOOOOOOP");
+		printf("\n 🚫 TETRI PAS PLACE\n");
+
+	if (is_placable(map, size-1, tetri_list[1], 1, 0))
+		printf("🆗 TETRI PLACE\n");
+	else
+		printf("\n 🚫 TETRI PAS PLACE\n");
+
+	if (is_placable(map, size-2, tetri_list[2], 2, 0))
+		printf("🆗 TETRI PLACE\n");
+	else
+		printf("\n 🚫 TETRI PAS PLACE\n");
+
+	if (is_placable(map, size, tetri_list[3], 0, 4))
+		printf("🆗 TETRI PLACE\n");
+	else
+		printf("\n 🚫 TETRI PAS PLACE\n");
+
 	return (map);
 }

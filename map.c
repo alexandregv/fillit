@@ -20,20 +20,19 @@ char		**new_map(int size)
 
 	if ((map = malloc(sizeof(char *) * size + 1)) == NULL)
 		return (NULL);
-	x = 0;
 	y = 0;
-	while (x < size)
+	while (y < size)
 	{
-		map[x] = ft_strnew(size);
-		while (y < size)
+		x = 0;
+		map[y] = ft_strnew(size);
+		while (x < size)
 		{
-			map[x][y] = '.';
-			y++;
+			map[y][x] = '.';
+			++x;
 		}
-		y = 0;
-		x++;
+		y++;
 	}
-	map[x] = NULL;
+	map[y] = NULL;
 	return (map);
 }
 
@@ -43,18 +42,17 @@ void    print_map(char **map)
 	int    x;
 	int    y;
 
-	x = 0;
 	y = 0;
-	while (map[x])
+	while (map[y])
 	{
-		while (map[x][y])
+		x = 0;
+		while (map[y][x])
 		{
-			ft_putchar(map[x][y]);
-			y++;
+			ft_putchar(map[y][x]);
+			++x;
 		}
-		y = 0;
 		ft_putchar('\n');
-		x++;
+		++y;
 	}
 }
 
@@ -63,17 +61,16 @@ void	clear_map(char **map)
 	int	x;
 	int	y;
 
-	x = 0;
 	y = 0;
-	while (map[x])
+	while (map[y])
 	{
-		while (map[x][y])
+		x = 0;
+		while (map[y][x])
 		{
-			map[x][y] = '.';
-			y++;
+			map[y][x] = '.';
+			++x;
 		}
-		y = 0;
-		x ++;
+		++y;
 	}
 }
 
@@ -84,18 +81,17 @@ int		is_map_full(char **map)
 	int	y;
 
 	holes = 0;
-	x = 0;
 	y = 0;
-	while (map[x])
+	while (map[y])
 	{
-		while (map[x][y])
+		x = 0;
+		while (map[y][x])
 		{
-			if (map[x][y] == '.')
-				holes++;
-			y++;
+			if (map[y][x] == '.')
+				++holes;
+			++x;
 		}
-		y = 0;
-		x++;
+		++y;
 	}
 	if (holes < 4)
 		return (1);
