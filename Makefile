@@ -6,7 +6,7 @@
 #    By: achoquel <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/06 12:01:01 by achoquel          #+#    #+#              #
-#    Updated: 2018/12/10 16:42:49 by aguiot--         ###   ########.fr        #
+#    Updated: 2018/12/12 12:57:38 by achoquel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ SRCS	=	main.c		\
 			errors.c	\
 			map.c		\
 			tetri.c		\
-			backtrack.c	\
+			backtrack.c
 
 OBJS	= 	$(SRCS:.c=.o)
 

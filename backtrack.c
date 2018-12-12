@@ -6,7 +6,7 @@
 /*   By: aguiot-- <aguiot--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/10 15:41:21 by aguiot--          #+#    #+#             */
-/*   Updated: 2018/12/11 17:04:45 by achoquel         ###   ########.fr       */
+/*   Updated: 2018/12/12 14:26:17 by achoquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,36 +62,30 @@ int			place_tetri(char **map, int size, t_tetri tetri, int xx, int yy)
 	return (0);
 }
 
-int	backtrack(char **map, int size,  t_tetri tetri_list[])
+int	backtrack(char **map, int size,  t_tetri tetri_list[], int i)
 {
 	int	x;
 	int	y;
-	int	i;
 
-	i = 0;
 	y = 0;
-	while(y < size && i < 9)
+	if (tetri_list[i].tetri == NULL)
+		return (1);
+	while (y < size)
 	{
 		x = 0;
-		while(x < size && i < 9)
+		while (x < size)
 		{
 			if (place_tetri(map, size, tetri_list[i], x, y))
 			{
-				++i;
-				printf("%d\n", i);
-				x = 0;
-				y = 0;
+				if (backtrack(map, size, tetri_list, i + 1))
+					return (1);
+				else
+					remove_tetri(map, tetri_list[i].letter);
 			}
 			++x;
 		}
 		++y;
 	}
-	if (i == 8)
-	{
-		printf("[1]\n\n");
-		return (1);
-	}
-	printf("[0]\n\n");
 	return (0);
 }
 
@@ -101,23 +95,22 @@ char	**solve(t_tetri tetri_list[], int size)
 	int		ret;
 	int		y = 0;
 
-	if (!(map = new_map(size)))
+/*	if (!(map = new_map(size)))
 		error();
-	if ((ret = backtrack(map, size, tetri_list)) == 1)
-	{
-		print_map(map);
-		printf("\n");
+	if (backtrack(map, size, tetri_list))
 		return (map);
-	}
-	else if (ret == 0)
+	else
 	{
 		while (map[y])
 		{
 			free(map[y]);
 			y++;
+			free(map);
+			return (NULL);
 		}
-		free(map);
-		return (NULL);
-	}
+	}*/
+	map = new_map(size);
+	while (!backtrack(map, size, tetri_list, 0))
+		map = new_map(++size);
 	return (map);
 }

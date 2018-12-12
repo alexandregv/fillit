@@ -6,7 +6,7 @@
 /*   By: aguiot-- <aguiot--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 13:55:24 by aguiot--          #+#    #+#             */
-/*   Updated: 2018/12/10 16:33:41 by aguiot--         ###   ########.fr       */
+/*   Updated: 2018/12/12 13:18:48 by achoquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,46 +54,4 @@ void    print_map(char **map)
 		ft_putchar('\n');
 		++y;
 	}
-}
-
-void	clear_map(char **map)
-{
-	int	x;
-	int	y;
-
-	y = 0;
-	while (map[y])
-	{
-		x = 0;
-		while (map[y][x])
-		{
-			map[y][x] = '.';
-			++x;
-		}
-		++y;
-	}
-}
-
-int		is_map_full(char **map)
-{
-	int	holes;
-	int	x;
-	int	y;
-
-	holes = 0;
-	y = 0;
-	while (map[y])
-	{
-		x = 0;
-		while (map[y][x])
-		{
-			if (map[y][x] == '.')
-				++holes;
-			++x;
-		}
-		++y;
-	}
-	if (holes < 4)
-		return (1);
-	return (0);
 }
