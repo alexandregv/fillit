@@ -6,7 +6,7 @@
 /*   By: aguiot-- <aguiot--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/10 15:41:21 by aguiot--          #+#    #+#             */
-/*   Updated: 2018/12/12 14:26:17 by achoquel         ###   ########.fr       */
+/*   Updated: 2018/12/12 14:52:43 by achoquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,20 +95,6 @@ char	**solve(t_tetri tetri_list[], int size)
 	int		ret;
 	int		y = 0;
 
-/*	if (!(map = new_map(size)))
-		error();
-	if (backtrack(map, size, tetri_list))
-		return (map);
-	else
-	{
-		while (map[y])
-		{
-			free(map[y]);
-			y++;
-			free(map);
-			return (NULL);
-		}
-	}*/
 	map = new_map(size);
 	while (!backtrack(map, size, tetri_list, 0))
 		map = new_map(++size);
