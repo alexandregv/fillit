@@ -6,7 +6,7 @@
 /*   By: aguiot-- <aguiot--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 13:32:53 by aguiot--          #+#    #+#             */
-/*   Updated: 2018/12/10 13:00:12 by aguiot--         ###   ########.fr       */
+/*   Updated: 2018/12/12 13:03:48 by achoquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static int		check_file(int fd, char **tetri_map)
 		nline++;
 	}
 	close(fd);
-	if (nline == 1 && gnl == 0)
+	if ((nline == 1 && gnl == 0) || (nline % 5 != 0 && gnl == 0))
 		return (-1);
 	if (gnl == -1)
 		return (-1);

@@ -6,7 +6,7 @@
 /*   By: achoquel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 13:25:51 by achoquel          #+#    #+#             */
-/*   Updated: 2018/12/11 16:43:24 by achoquel         ###   ########.fr       */
+/*   Updated: 2018/12/12 13:09:13 by achoquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,12 @@ int			main(int ac, char **av)
 		ft_putendl("usage: ./fillit [file]");
 		return (1);
 	}
-	//ft_bzero(tetri_list, sizeof(t_tetri) * (26 + 1));
 	map = NULL;
 	if (check_errors(av[1], &tetri_map) != 0)
 		return (error());
 	size = init_tetri_list(tetri_list, tetri_map);
+	if (size > 26)
+		return (error());
 	size = round_sqrt(size * 4);
 	while ((map = solve(tetri_list, size)) == NULL)
 		++size;
