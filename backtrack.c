@@ -6,13 +6,13 @@
 /*   By: aguiot-- <aguiot--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/10 15:41:21 by aguiot--          #+#    #+#             */
-/*   Updated: 2018/12/13 13:44:18 by aguiot--         ###   ########.fr       */
+/*   Updated: 2018/12/13 16:23:55 by achoquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
-void			remove_tetri(char **map, char letter)
+static void		remove_tetri(char **map, char letter)
 {
 	int    x;
 	int    y;
@@ -30,99 +30,34 @@ void			remove_tetri(char **map, char letter)
 		++y;
 	}
 }
-
-int			place_tetri(char **map, int size, t_tetri tetri, int xx, int yy)
+static int		is_placable(char **map, t_tetri tetri, int x, int y)
 {
-	int	i;
-	int x;
-	int y;
-
-	i = 0;
-	y = yy;
-	size -= xx;
-	while (map[y])
-	{
-		x = xx;
-		while (map[y][x + (size - 4)])
-		{
-			if (map[y][x] == '.' && tetri.tetri[i] == '#')
-				map[y][x] = tetri.letter;
-			else if (tetri.tetri[i] == '#')
-			{
-				remove_tetri(map, tetri.letter);
-				return (0);
-			}
-			++x;
-			++i;
-			if (tetri.tetri[i] == '\0')
-				return (1);
-		}
-		++y;
-	}
-	return (0);
-}
-
-int			is_placable(char **map, int size, t_tetri tetri, int xx, int y)
-{
-	int i;
-	int x;
-
-	i = 0;
-	while (map[y])
-	{
-		x = xx;
-		size -= xx;
-		while (map[y][x + (size - 4)])
-		{
-			if (tetri.tetri[i] == '#' && map[y][x] != '.')
-			{
-				printf("%c x: %d y:%d %d\n", tetri.letter, x, y, 0);
-				return (0);	
-			}
-			++x;
-			++i;
-			if (tetri.tetri[i] == '\0')
-			{
-				printf("%c x: %d y:%d %d i: %d \\0 \n", tetri.letter, x, y, i, 1);
-				return (1);
-			}
-		}
-		printf("%c x: %d y:%d %d\n", tetri.letter, x, y, 1);
-		++y;
-	}
+	if (map[y + tetri.coords[0].y][x + tetri.coords[0].x] != '.' ||
+		map[y + tetri.coords[1].y][x + tetri.coords[1].x] != '.' ||
+		map[y + tetri.coords[2].y][x + tetri.coords[2].x] != '.' ||
+		map[y + tetri.coords[3].y][x + tetri.coords[3].x] != '.')
+		return (0);
 	return (1);
 }
 
-int			ppplace_tetri(char **map, int size, t_tetri tetri, int xx, int y)
+static int		place_tetri(char **map, t_tetri tetri, int x, int y)
 {
-	int	i;
-	int x;
-
-	i = 0;
-	if(is_placable(map, size, tetri, xx, y))
+	if (is_placable(map, tetri, x, y))
 	{
-		
-		size -= xx;
-		while (map[y])
-		{
-			x = xx;
-			while (map[y][x + (size - 4)])
-			{
-				if (tetri.tetri[i] == '#' && map[y][x + (size - 4)] == '.')
-					map[y][x] = tetri.letter;
-				++x;
-				++i;
-				if (tetri.tetri[i] == '\0')
-					return (1);
-			}
-			++y;
-		}
-		printf("WTF ????");
+		printf("%d %d\n", tetri.coords[0].y, tetri.coords[0].x);
+		printf("%d %d\n", tetri.coords[1].y, tetri.coords[1].x);
+		printf("%d %d\n", tetri.coords[2].y, tetri.coords[2].x);
+		printf("%d %d\n", tetri.coords[3].y, tetri.coords[3].x);
+		map[y + tetri.coords[0].y][x + tetri.coords[0].x] = tetri.letter;
+		map[y + tetri.coords[1].y][x + tetri.coords[1].x] = tetri.letter;
+		map[y + tetri.coords[2].y][x + tetri.coords[2].x] = tetri.letter;
+		map[y + tetri.coords[3].y][x + tetri.coords[3].x] = tetri.letter;
+		return (1);
 	}
 	return (0);
 }
 
-int	backtrack(char **map, int size,  t_tetri tetri_list[], int i)
+static int		backtrack(char **map, int size,  t_tetri tetri_list[], int i)
 {
 	int	x;
 	int	y;
@@ -135,17 +70,12 @@ int	backtrack(char **map, int size,  t_tetri tetri_list[], int i)
 		x = 0;
 		while (x < size)
 		{
-			if (place_tetri(map, size, tetri_list[i], x, y))
+			if (place_tetri(map, tetri_list[i], x, y))
 			{
-				//print_map(map);
-				//ft_putchar('\n');
 				if (backtrack(map, size, tetri_list, i + 1))
 					return (1);
 				else
-				{
-					//printf("on remove %c\n", tetri_list[i].letter);
 					remove_tetri(map, tetri_list[i].letter);
-				}
 			}
 			++x;
 		}
@@ -154,7 +84,7 @@ int	backtrack(char **map, int size,  t_tetri tetri_list[], int i)
 	return (0);
 }
 
-char	**solve(t_tetri tetri_list[], int size)
+char			**solve(t_tetri tetri_list[], int size)
 {
 	char	**map;
 	int		ret;
