@@ -6,7 +6,7 @@
 /*   By: aguiot-- <aguiot--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 13:30:53 by aguiot--          #+#    #+#             */
-/*   Updated: 2018/12/13 16:20:43 by aguiot--         ###   ########.fr       */
+/*   Updated: 2018/12/13 16:41:42 by achoquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,30 @@ int 	iiiiinit_tetri_list(t_tetri tetri_list[], char *tetri_map)
 	return (i);
 }
 
+static void	init_coords(t_tetri tetri)
+{
+	int i = 0;
+	int y = 0;
+	int x = 0;
+	int k;
+	while (tetri.tetri[i])
+	{
+		if (tetri.tetri[i] == '#')
+		{
+			tetri.coords[k] = tetri.tetri[i];
+			++k;
+		}
+
+		++x;
+		if (x == 4)
+		{
+			++y;
+			x = 0;
+		}
+		++i;
+	}
+}
+
 int 	init_tetri_list(t_tetri tetri_list[], char *tetri_map)
 {
 	int	i;
@@ -63,13 +87,9 @@ int 	init_tetri_list(t_tetri tetri_list[], char *tetri_map)
 		tetri_list[i].letter = 'A' + i;
 		tetri_list[i].tetri  = ft_strsub(tetri_map, j, 16);
 		topleft(&tetri_list[i].tetri);
-
-		tetri_list[i].coords[0].x = x; 
-		tetri_list[i].coords[0].y = y;
-		++x;
-		if (x % 4 == 0)
-			++y;
 		
+		init_coords(tetri_list[i]);
+
 		++i;
 		j += 16;
 	}
