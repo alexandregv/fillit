@@ -6,7 +6,7 @@
 /*   By: aguiot-- <aguiot--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 13:30:53 by aguiot--          #+#    #+#             */
-/*   Updated: 2018/12/13 16:41:42 by achoquel         ###   ########.fr       */
+/*   Updated: 2018/12/13 16:45:12 by achoquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,8 @@ static void	init_coords(t_tetri tetri)
 	{
 		if (tetri.tetri[i] == '#')
 		{
-			tetri.coords[k] = tetri.tetri[i];
+			tetri.coords[k].x = x;
+			tetri.coords[k].y = y;
 			++k;
 		}
 
