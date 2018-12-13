@@ -6,7 +6,7 @@
 /*   By: achoquel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 13:25:51 by achoquel          #+#    #+#             */
-/*   Updated: 2018/12/12 13:09:13 by achoquel         ###   ########.fr       */
+/*   Updated: 2018/12/13 13:33:45 by aguiot--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int			main(int ac, char **av)
 	char	*tetri_map;
 	int		size;
 	t_tetri	tetri_list[26 + 1];
-
+setbuf(stdout, NULL);
 	if (ac != 2)
 	{
 		ft_putendl("usage: ./fillit [file]");
