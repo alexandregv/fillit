@@ -6,7 +6,7 @@
 /*   By: aguiot-- <aguiot--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/10 15:41:21 by aguiot--          #+#    #+#             */
-/*   Updated: 2018/12/13 16:23:55 by achoquel         ###   ########.fr       */
+/*   Updated: 2018/12/13 17:20:28 by aguiot--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,24 +30,43 @@ static void		remove_tetri(char **map, char letter)
 		++y;
 	}
 }
-static int		is_placable(char **map, t_tetri tetri, int x, int y)
+static int		is_placable(char **map, int size, t_tetri tetri, int x, int y)
 {
+	/*
+	printf("%d %d\n", tetri.coords[0].y, tetri.coords[0].x);
+	printf("%d %d\n", tetri.coords[1].y, tetri.coords[1].x);
+	printf("%d %d\n", tetri.coords[2].y, tetri.coords[2].x);
+	printf("%d %d\n", tetri.coords[3].y, tetri.coords[3].x);
+	*/
+
+	//printf("y: %d x: %d\n", y, x);
+
+	if ((tetri.coords[0].y+y >= size || tetri.coords[0].x+x >= size) || 
+		(tetri.coords[1].y+y >= size || tetri.coords[1].x+x >= size) ||
+		(tetri.coords[2].y+y >= size || tetri.coords[2].x+x >= size) ||
+		(tetri.coords[3].y+y >= size || tetri.coords[3].x+x >= size))
+	{
+		//printf("lol\n");
+		return (0);
+	}
+	
 	if (map[y + tetri.coords[0].y][x + tetri.coords[0].x] != '.' ||
 		map[y + tetri.coords[1].y][x + tetri.coords[1].x] != '.' ||
 		map[y + tetri.coords[2].y][x + tetri.coords[2].x] != '.' ||
 		map[y + tetri.coords[3].y][x + tetri.coords[3].x] != '.')
+	{
+		//printf("mdr\n");
 		return (0);
+	}
+	//printf("fdp\n");
 	return (1);
 }
 
-static int		place_tetri(char **map, t_tetri tetri, int x, int y)
+static int		place_tetri(char **map, int size, t_tetri tetri, int x, int y)
 {
-	if (is_placable(map, tetri, x, y))
+	
+	if (is_placable(map, size, tetri, x, y))
 	{
-		printf("%d %d\n", tetri.coords[0].y, tetri.coords[0].x);
-		printf("%d %d\n", tetri.coords[1].y, tetri.coords[1].x);
-		printf("%d %d\n", tetri.coords[2].y, tetri.coords[2].x);
-		printf("%d %d\n", tetri.coords[3].y, tetri.coords[3].x);
 		map[y + tetri.coords[0].y][x + tetri.coords[0].x] = tetri.letter;
 		map[y + tetri.coords[1].y][x + tetri.coords[1].x] = tetri.letter;
 		map[y + tetri.coords[2].y][x + tetri.coords[2].x] = tetri.letter;
@@ -70,12 +89,17 @@ static int		backtrack(char **map, int size,  t_tetri tetri_list[], int i)
 		x = 0;
 		while (x < size)
 		{
-			if (place_tetri(map, tetri_list[i], x, y))
+			if (place_tetri(map, size, tetri_list[i], x, y))
 			{
+				//printf("tetri: %c\n", tetri_list[i].letter);
+				//print_map(map);
 				if (backtrack(map, size, tetri_list, i + 1))
 					return (1);
 				else
+				{
+					//printf("==================remove\n");
 					remove_tetri(map, tetri_list[i].letter);
+				}
 			}
 			++x;
 		}

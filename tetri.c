@@ -6,7 +6,7 @@
 /*   By: aguiot-- <aguiot--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 13:30:53 by aguiot--          #+#    #+#             */
-/*   Updated: 2018/12/13 16:45:12 by achoquel         ###   ########.fr       */
+/*   Updated: 2018/12/13 17:26:45 by aguiot--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,18 +47,24 @@ int 	iiiiinit_tetri_list(t_tetri tetri_list[], char *tetri_map)
 	return (i);
 }
 
-static void	init_coords(t_tetri tetri)
+static void	init_coords(t_tetri *tetri)
 {
-	int i = 0;
-	int y = 0;
-	int x = 0;
+	int i;
+	int y;
+	int x;
 	int k;
-	while (tetri.tetri[i])
+
+	i = 0;
+	y = 0;
+	x = 0;
+	k = 0;
+	while (tetri->tetri[i])
 	{
-		if (tetri.tetri[i] == '#')
+		if (tetri->tetri[i] == '#')
 		{
-			tetri.coords[k].x = x;
-			tetri.coords[k].y = y;
+			//printf("y: %d x: %d\n", y, x);
+			tetri->coords[k].x = x;
+			tetri->coords[k].y = y;
 			++k;
 		}
 
@@ -70,6 +76,7 @@ static void	init_coords(t_tetri tetri)
 		}
 		++i;
 	}
+	//printf("\n");
 }
 
 int 	init_tetri_list(t_tetri tetri_list[], char *tetri_map)
@@ -89,7 +96,7 @@ int 	init_tetri_list(t_tetri tetri_list[], char *tetri_map)
 		tetri_list[i].tetri  = ft_strsub(tetri_map, j, 16);
 		topleft(&tetri_list[i].tetri);
 		
-		init_coords(tetri_list[i]);
+		init_coords(&tetri_list[i]);
 
 		++i;
 		j += 16;
