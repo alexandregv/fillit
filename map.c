@@ -6,19 +6,19 @@
 /*   By: aguiot-- <aguiot--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 13:55:24 by aguiot--          #+#    #+#             */
-/*   Updated: 2018/12/14 13:13:55 by aguiot--         ###   ########.fr       */
+/*   Updated: 2018/12/14 15:47:59 by aguiot--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
-char		**new_map(int size)
+char	**new_map(int size)
 {
 	char	**map;
 	int		x;
 	int		y;
 
-	if ((map = malloc(sizeof(char *) * size + 1)) == NULL)
+	if ((map = malloc(sizeof(char *) * (size + 1))) == NULL)
 		return (NULL);
 	y = 0;
 	while (y < size)
@@ -30,17 +30,16 @@ char		**new_map(int size)
 			map[y][x] = '.';
 			++x;
 		}
-		y++;
+		++y;
 	}
 	map[y] = NULL;
 	return (map);
 }
 
-void    print_map(char **map)
+void	print_map(char **map)
 {
-
-	int    x;
-	int    y;
+	int		x;
+	int		y;
 
 	y = 0;
 	while (map[y])

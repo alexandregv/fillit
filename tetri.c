@@ -6,7 +6,7 @@
 /*   By: aguiot-- <aguiot--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 13:30:53 by aguiot--          #+#    #+#             */
-/*   Updated: 2018/12/14 13:56:10 by aguiot--         ###   ########.fr       */
+/*   Updated: 2018/12/14 15:13:53 by aguiot--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,11 @@
 
 static char	*tetrim(char const *s)
 {
-	char    *trim;
-	int        i;
-	int        j;
-	int        k;
+	char	*trim;
+	int		i;
+	int		j;
+	int		k;
+
 	if (!s)
 		return (NULL);
 	i = 0;
@@ -41,9 +42,7 @@ static void	topleft(char **tetri)
 	char	*tmp;
 
 	tmp = *tetri;
-	free(tmp);
 	*tetri = tetrim(*tetri);
-	free(*tetri);
 	if (ft_strcmp(*tetri, "#..##...#") == 0)
 		*tetri = ft_strdup(".#..##...#");
 	else if (ft_strcmp(*tetri, "##.##") == 0)
@@ -77,7 +76,6 @@ static void	init_coords(t_tetri *tetri)
 			tetri->coords[k].y = y;
 			++k;
 		}
-
 		++x;
 		if (x == 4)
 		{
@@ -88,26 +86,26 @@ static void	init_coords(t_tetri *tetri)
 	}
 }
 
-int 	init_tetri_list(t_tetri tetri_list[], char *tetri_map)
+int			init_tetri_list(t_tetri tetri_list[], char *tetri_map)
 {
-	int	i;
-	int	j;
-	int x;
-	int y;
+	int		i;
+	int		j;
+	char	*tmp;
 
 	i = 0;
 	j = 0;
-	x = 0;
-	y = 0;
 	while (tetri_map[j])
 	{
 		tetri_list[i].letter = 'A' + i;
-		tetri_list[i].tetri  = ft_strsub(tetri_map, j, 16);
+		tmp = tetri_list[i].tetri;
+		tetri_list[i].tetri = ft_strsub(tetri_map, j, 16);
+		free(tmp);
+		tmp = tetri_list[i].tetri;
 		topleft(&tetri_list[i].tetri);
+		free(tmp);
 		init_coords(&tetri_list[i]);
 		++i;
 		j += 16;
 	}
-	//free(tetri_map);
 	return (i);
 }

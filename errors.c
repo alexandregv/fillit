@@ -6,15 +6,15 @@
 /*   By: aguiot-- <aguiot--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 13:32:53 by aguiot--          #+#    #+#             */
-/*   Updated: 2018/12/14 13:46:26 by aguiot--         ###   ########.fr       */
+/*   Updated: 2018/12/14 16:01:27 by aguiot--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
-static int		check_line(char *line, int nline)
+static int	check_line(char *line, int nline)
 {
-	int			pos;
+	int		pos;
 
 	pos = 0;
 	if (nline > 0 && nline % 5 == 0)
@@ -37,40 +37,36 @@ static int		check_line(char *line, int nline)
 	return (0);
 }
 
-static int		check_file(int fd, char **tetri_map)
+static int	check_file(int fd, char **tetri_map)
 {
+	char	*line;
+	int		n;
+	int		gnl;
+	char	*tmp;
 
-	char		*line;
-	int			nline;
-	int			gnl;
-	char		*tmp;
-
-	if (!(line = ft_strnew(0)) || !(*tetri_map = ft_strnew(0)))
+	if (!(*tetri_map = ft_strnew(0)))
 		return (-1);
-	nline = 1;
+	if (!(line = ft_strnew(0)))
+		return (-1);
+	n = 1;
 	while ((gnl = get_next_line(fd, &line)) > 0)
 	{
-		if (check_line(line, nline) == -1)
-		{
-			free(*tetri_map);
+		if (check_line(line, n) == -1)
 			free(line);
+		if (check_line(line, n++) == -1)
 			return (-1);
-		}
 		tmp = *tetri_map;
 		*tetri_map = ft_strjoin(*tetri_map, line);
 		free(tmp);
 		free(line);
-		nline++;
 	}
 	close(fd);
-	if ((nline == 1 && gnl == 0) || (nline % 5 != 0 && gnl == 0))
-		return (-1);
-	if (gnl == -1)
+	if ((n == 1 && gnl == 0) || (n % 5 != 0 && gnl == 0) || gnl == -1)
 		return (-1);
 	return (0);
 }
 
-int		check_tetrimino(char *map)
+static int	check_tetrimino(char *map)
 {
 	int	conn;
 	int	i;
@@ -120,6 +116,6 @@ int			check_errors(char *path, char **tetri_map)
 		return (1);
 	if (check_all_tetriminos(*tetri_map) == 1)
 		return (1);
-	close(fd); //TODO: gerer erreurs open/close
+	close(fd);
 	return (0);
 }
