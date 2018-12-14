@@ -6,11 +6,12 @@
 /*   By: aguiot-- <aguiot--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 13:32:53 by aguiot--          #+#    #+#             */
-/*   Updated: 2018/12/14 16:01:27 by aguiot--         ###   ########.fr       */
+/*   Updated: 2018/12/14 19:12:23 by achoquel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
+#include <stdio.h>
 
 static int	check_line(char *line, int nline)
 {
@@ -56,7 +57,7 @@ static int	check_file(int fd, char **tetri_map)
 		if (check_line(line, n++) == -1)
 			return (-1);
 		tmp = *tetri_map;
-		*tetri_map = ft_strjoin(*tetri_map, line);
+		*tetri_map = ft_strjoin(tmp, line);
 		free(tmp);
 		free(line);
 	}
@@ -93,14 +94,12 @@ static int	check_tetrimino(char *map)
 
 static int	check_all_tetriminos(char *tetri_map)
 {
-	char	*tetri;
 	int		i;
 
 	i = 0;
 	while (tetri_map[i])
 	{
-		tetri = ft_strsub(tetri_map, i, 16);
-		if (check_tetrimino(tetri) == 1)
+		if (check_tetrimino(tetri_map + i) == 1)
 			return (1);
 		i += 16;
 	}
