@@ -6,7 +6,7 @@
 #    By: achoquel <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/06 12:01:01 by achoquel          #+#    #+#              #
-#    Updated: 2018/12/14 13:15:26 by aguiot--         ###   ########.fr        #
+#    Updated: 2018/12/14 16:08:50 by aguiot--         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,16 +28,18 @@ LIB		=	-L./libft/ -lft
 
 RM		=	/bin/rm -f
 
-all		:
-			@make $(NAME)
+all		:	$(NAME)
 
 $(NAME)	:	$(OBJS)
+			make  -C libft/
 			$(CC) -o $(NAME) $(OBJS) $(LIB)
 
 clean	:
+			make -C libft/ clean
 			$(RM) $(OBJS)
 
 fclean	:	clean
 			$(RM) $(NAME)
+			$(RM) libft/libft.a
 
 re		:	fclean all
