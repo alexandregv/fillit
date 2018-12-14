@@ -6,12 +6,11 @@
 /*   By: aguiot-- <aguiot--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 13:32:53 by aguiot--          #+#    #+#             */
-/*   Updated: 2018/12/14 19:22:56 by aguiot--         ###   ########.fr       */
+/*   Updated: 2018/12/14 19:29:33 by aguiot--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
-#include <stdio.h>
 
 static int	check_line(char *line, int nline)
 {
