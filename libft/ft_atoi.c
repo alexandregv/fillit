@@ -3,40 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achoquel <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: aguiot-- <aguiot--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/07/07 15:53:56 by achoquel          #+#    #+#             */
-/*   Updated: 2018/11/23 12:17:44 by achoquel         ###   ########.fr       */
+/*   Created: 2018/11/13 12:04:38 by aguiot--          #+#    #+#             */
+/*   Updated: 2018/11/19 18:22:30 by aguiot--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/libft.h"
+#include "libft.h"
 
-int		ft_atoi(const char *str)
+int					ft_atoi(char const *s)
 {
-	int i;
-	int neg;
-	int r;
+	long long int	nb;
+	long long int	k;
 
-	i = 0;
-	neg = 0;
-	r = 0;
-	while (str[i] == ' ' || str[i] == '\n' || str[i] == '\t' || str[i] == '\v'
-		|| (str[i] == '+' && ft_isdigit((int)str[i + 1])) || str[i] == '\r'
-		|| str[i] == '\f')
-		i++;
-	if (str[i] == '-')
-	{
-		neg = 1;
-		i++;
-	}
-	while (str[i] >= '0' && str[i] <= '9')
-	{
-		r = r * 10;
-		r = r + ((int)str[i] - '0');
-		i++;
-	}
-	if (neg == 1)
-		r = -r;
-	return (r);
+	nb = 0;
+	while (s && *s && ft_isspace(*s))
+		++s;
+	k = (*s == '-' ? -1 : 1);
+	if (*s == '-' || *s == '+')
+		++s;
+	while (*s && ft_isdigit(*s))
+		nb = (nb * 10) + (long long int)(*(s++) - 48);
+	return (long long int)(nb * k);
 }

@@ -6,7 +6,7 @@
 /*   By: aguiot-- <aguiot--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 13:32:53 by aguiot--          #+#    #+#             */
-/*   Updated: 2018/12/12 13:03:48 by achoquel         ###   ########.fr       */
+/*   Updated: 2018/12/14 13:46:26 by aguiot--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ static int		check_file(int fd, char **tetri_map)
 	char		*line;
 	int			nline;
 	int			gnl;
+	char		*tmp;
 
 	if (!(line = ft_strnew(0)) || !(*tetri_map = ft_strnew(0)))
 		return (-1);
@@ -50,10 +51,15 @@ static int		check_file(int fd, char **tetri_map)
 	while ((gnl = get_next_line(fd, &line)) > 0)
 	{
 		if (check_line(line, nline) == -1)
+		{
+			free(*tetri_map);
+			free(line);
 			return (-1);
-		char *tmp = *tetri_map;
+		}
+		tmp = *tetri_map;
 		*tetri_map = ft_strjoin(*tetri_map, line);
 		free(tmp);
+		free(line);
 		nline++;
 	}
 	close(fd);
@@ -64,24 +70,24 @@ static int		check_file(int fd, char **tetri_map)
 	return (0);
 }
 
-int		check_tetrimino(char *grid)
+int		check_tetrimino(char *map)
 {
 	int	conn;
 	int	i;
 
 	conn = 0;
 	i = 0;
-	while (grid[i] && i < 16)
+	while (map[i] && i < 16)
 	{
-		if (grid[i] == '#')
+		if (map[i] == '#')
 		{
-			if ((i + 1 % 4 != 0) && (i + 1 < 16) && grid[i + 1] == '#')
+			if ((i + 1 % 4 != 0) && (i + 1 < 16) && map[i + 1] == '#')
 				++conn;
-			if ((i % 4 != 0) && (i - 1 >= 0) && grid[i - 1] == '#')
+			if ((i % 4 != 0) && (i - 1 >= 0) && map[i - 1] == '#')
 				++conn;
-			if ((i + 4 < 16) && grid[i + 4] == '#')
+			if ((i + 4 < 16) && map[i + 4] == '#')
 				++conn;
-			if ((i - 4 >= 0) && grid[i - 4] == '#')
+			if ((i - 4 >= 0) && map[i - 4] == '#')
 				++conn;
 		}
 		++i;

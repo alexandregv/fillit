@@ -3,32 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achoquel <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: aguiot-- <aguiot--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/14 09:43:03 by achoquel          #+#    #+#             */
-/*   Updated: 2018/11/23 12:19:07 by achoquel         ###   ########.fr       */
+/*   Created: 2018/11/13 19:10:19 by aguiot--          #+#    #+#             */
+/*   Updated: 2018/11/13 19:47:41 by aguiot--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include "includes/libft.h"
+#include "libft.h"
 
 t_list		*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem))
 {
-	t_list	*fresh;
-	t_list	*head;
+	t_list	*res;
 
-	if (lst)
+	while (lst)
 	{
-		head = f(lst);
-		fresh = head;
-		while (lst->next)
-		{
-			lst = lst->next;
-			fresh->next = f(lst);
-			fresh = fresh->next;
-		}
-		return (head);
+		res = f(lst);
+		res->next = ft_lstmap(lst->next, f);
+		return (res);
 	}
 	return (NULL);
 }

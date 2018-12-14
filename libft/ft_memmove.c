@@ -3,39 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achoquel <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: aguiot-- <aguiot--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/12 13:33:24 by achoquel          #+#    #+#             */
-/*   Updated: 2018/11/23 12:19:55 by achoquel         ###   ########.fr       */
+/*   Created: 2018/11/13 14:29:52 by aguiot--          #+#    #+#             */
+/*   Updated: 2018/11/13 15:06:07 by aguiot--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <string.h>
-#include "includes/libft.h"
 
-void	*ft_memmove(void *dst, const void *src, size_t len)
+void	*ft_memmove(void *dst, void const *src, size_t len)
 {
-	unsigned char	*tsrc;
-	unsigned char	*tdst;
-	unsigned char	tmp[len];
+	unsigned char	*pdst;
+	unsigned char	*psrc;
 	size_t			i;
 
-	tsrc = (unsigned char *)src;
-	tdst = (unsigned char *)dst;
-	if (len >= 128 * 1024 * 1024)
-		return (NULL);
+	pdst = (unsigned char*)dst;
+	psrc = (unsigned char*)src;
 	i = 0;
-	while (i < len)
-	{
-		tmp[i] = tsrc[i];
-		i++;
-	}
-	i = 0;
-	while (i < len)
-	{
-		tdst[i] = tmp[i];
-		i++;
-	}
-	dst = tdst;
+	if (psrc < pdst)
+		while (++i <= len)
+			*(pdst + len - i) = *(psrc + len - i);
+	else
+		while (len-- > 0)
+			*(pdst++) = *(psrc++);
 	return (dst);
 }

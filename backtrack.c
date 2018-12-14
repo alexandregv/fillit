@@ -6,7 +6,7 @@
 /*   By: aguiot-- <aguiot--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/10 15:41:21 by aguiot--          #+#    #+#             */
-/*   Updated: 2018/12/13 17:20:28 by aguiot--         ###   ########.fr       */
+/*   Updated: 2018/12/14 13:30:54 by aguiot--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,33 +32,17 @@ static void		remove_tetri(char **map, char letter)
 }
 static int		is_placable(char **map, int size, t_tetri tetri, int x, int y)
 {
-	/*
-	printf("%d %d\n", tetri.coords[0].y, tetri.coords[0].x);
-	printf("%d %d\n", tetri.coords[1].y, tetri.coords[1].x);
-	printf("%d %d\n", tetri.coords[2].y, tetri.coords[2].x);
-	printf("%d %d\n", tetri.coords[3].y, tetri.coords[3].x);
-	*/
-
-	//printf("y: %d x: %d\n", y, x);
-
 	if ((tetri.coords[0].y+y >= size || tetri.coords[0].x+x >= size) || 
 		(tetri.coords[1].y+y >= size || tetri.coords[1].x+x >= size) ||
 		(tetri.coords[2].y+y >= size || tetri.coords[2].x+x >= size) ||
 		(tetri.coords[3].y+y >= size || tetri.coords[3].x+x >= size))
-	{
-		//printf("lol\n");
 		return (0);
-	}
 	
 	if (map[y + tetri.coords[0].y][x + tetri.coords[0].x] != '.' ||
 		map[y + tetri.coords[1].y][x + tetri.coords[1].x] != '.' ||
 		map[y + tetri.coords[2].y][x + tetri.coords[2].x] != '.' ||
 		map[y + tetri.coords[3].y][x + tetri.coords[3].x] != '.')
-	{
-		//printf("mdr\n");
 		return (0);
-	}
-	//printf("fdp\n");
 	return (1);
 }
 
@@ -97,7 +81,6 @@ static int		backtrack(char **map, int size,  t_tetri tetri_list[], int i)
 					return (1);
 				else
 				{
-					//printf("==================remove\n");
 					remove_tetri(map, tetri_list[i].letter);
 				}
 			}
@@ -111,11 +94,12 @@ static int		backtrack(char **map, int size,  t_tetri tetri_list[], int i)
 char			**solve(t_tetri tetri_list[], int size)
 {
 	char	**map;
-	int		ret;
-	int		y = 0;
 
 	map = new_map(size);
 	while (!backtrack(map, size, tetri_list, 0))
+	{
+		free_map(map);
 		map = new_map(++size);
+	}
 	return (map);
 }

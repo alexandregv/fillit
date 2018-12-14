@@ -1,24 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_str_is_printable.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achoquel <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: aguiot-- <aguiot--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/15 13:41:47 by achoquel          #+#    #+#             */
-/*   Updated: 2018/12/05 12:34:54 by achoquel         ###   ########.fr       */
+/*   Created: 2018/11/12 13:27:59 by aguiot--          #+#    #+#             */
+/*   Updated: 2018/11/19 18:24:45 by aguiot--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
-# define BUFF_SIZE 5
-# include <sys/types.h>
-# include <sys/uio.h>
-# include <unistd.h>
-# include <stdlib.h>
-# include "libft.h"
+#include "libft.h"
 
-int	get_next_line(const int fd, char **line);
-
-#endif
+int	ft_str_is_printable(char const *s)
+{
+	while (s && *s)
+	{
+		if (!ft_isprint(*s))
+			return (0);
+		++s;
+	}
+	return (1);
+}

@@ -3,19 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isascii.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achoquel <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: aguiot-- <aguiot--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/07 12:48:10 by achoquel          #+#    #+#             */
-/*   Updated: 2018/11/23 12:18:20 by achoquel         ###   ########.fr       */
+/*   Created: 2018/11/08 18:50:59 by aguiot--          #+#    #+#             */
+/*   Updated: 2018/11/08 18:51:49 by aguiot--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/libft.h"
-
-int		ft_isascii(int t)
+int	ft_isascii(int c)
 {
-	if (t >= 0 && t <= 127)
-		return (1);
-	else
-		return (0);
+	return (c >= 0 && c <= 127);
 }

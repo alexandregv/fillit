@@ -3,21 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   ft_striter.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achoquel <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: aguiot-- <aguiot--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/09 14:32:29 by achoquel          #+#    #+#             */
-/*   Updated: 2018/11/14 16:01:13 by achoquel         ###   ########.fr       */
+/*   Created: 2018/11/12 17:29:28 by aguiot--          #+#    #+#             */
+/*   Updated: 2018/11/14 17:22:57 by aguiot--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-void	ft_striter(char *s, void (*f)(char *))
+void		ft_striter(char *s, void (*f)(char *))
 {
-	if (s && f)
-	{
-		while (*s != '\0')
-		{
-			f(s);
-			s++;
-		}
-	}
+	char	*p;
+
+	if (!s || !f)
+		return ;
+	p = s;
+	while (p && *p)
+		f(p++);
 }

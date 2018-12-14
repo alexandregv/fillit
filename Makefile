@@ -6,7 +6,7 @@
 #    By: achoquel <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/06 12:01:01 by achoquel          #+#    #+#              #
-#    Updated: 2018/12/12 12:57:38 by achoquel         ###   ########.fr        #
+#    Updated: 2018/12/14 13:15:26 by aguiot--         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,8 +22,8 @@ OBJS	= 	$(SRCS:.c=.o)
 
 CC		=	gcc
 
-CFLAGS	+=	-Wall -Wextra -Werror
-CFLAGS =
+CFLAGS	+=	-Wall -Wextra -Werror -g
+
 LIB		=	-L./libft/ -lft
 
 RM		=	/bin/rm -f

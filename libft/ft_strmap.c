@@ -3,35 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achoquel <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: aguiot-- <aguiot--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/10 13:34:03 by achoquel          #+#    #+#             */
-/*   Updated: 2018/11/23 12:22:02 by achoquel         ###   ########.fr       */
+/*   Created: 2018/11/12 18:11:40 by aguiot--          #+#    #+#             */
+/*   Updated: 2018/11/12 19:06:10 by aguiot--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/libft.h"
-#include <stdlib.h>
+#include "libft.h"
 
 char	*ft_strmap(char const *s, char (*f)(char))
 {
-	char	*fresh;
-	int		i;
-	int		l;
+	char	*str;
+	char	*ptr;
+	char	*ps;
 
-	if (s)
-	{
-		i = 0;
-		l = ft_strlen((char *)s) + 1;
-		if ((fresh = (char *)malloc(sizeof(char) * l)) == NULL)
-			return (NULL);
-		while (s[i] != '\0')
-		{
-			fresh[i] = f(s[i]);
-			i++;
-		}
-		fresh[i] = '\0';
-		return (fresh);
-	}
-	return (NULL);
+	if (!s || (str = ft_strnew(ft_strlen(s))) == NULL)
+		return (NULL);
+	ptr = str;
+	ps = (char*)s;
+	while (ps && *ps)
+		*(ptr++) = f(*(ps++));
+	return (str);
 }

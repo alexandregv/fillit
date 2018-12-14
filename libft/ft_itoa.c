@@ -3,64 +3,51 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achoquel <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: aguiot-- <aguiot--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/09 09:32:51 by achoquel          #+#    #+#             */
-/*   Updated: 2018/11/23 12:18:38 by achoquel         ###   ########.fr       */
+/*   Created: 2018/11/14 16:36:14 by aguiot--          #+#    #+#             */
+/*   Updated: 2018/11/19 18:23:00 by aguiot--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 #include <stdlib.h>
-#include "includes/libft.h"
 
-static long int	ft_intsize(long int tmp)
+static void	check_neg(int *n, int *neg)
 {
-	long int	size;
-
-	size = 0;
-	if (tmp == 0)
-		return (1);
-	else if (tmp < 0)
-		++size;
-	while (tmp != 0)
+	if (*n < 0)
 	{
-		tmp /= 10;
-		++size;
+		*n *= -1;
+		*neg = 1;
 	}
-	return (size);
-}
-
-static int		ft_isneg(int n)
-{
-	if (n < 0)
-		return (1);
 	else
-		return (0);
+		*neg = 0;
 }
 
-char			*ft_itoa(int n)
+char		*ft_itoa(int n)
 {
-	long int		size;
-	long int		tmp;
-	char			*str;
-	int				neg;
+	char	*str;
+	int		ncpy;
+	int		size;
+	int		neg;
 
-	tmp = (long int)n;
-	size = ft_intsize(tmp) + 1;
-	if ((str = (char *)malloc(sizeof(char) * size)) == 0)
+	if (n == -2147483648)
+		return (ft_strdup("-2147483648"));
+	check_neg(&n, &neg);
+	ncpy = n;
+	size = 2;
+	while (ncpy /= 10)
+		++size;
+	size += neg;
+	if ((str = (char*)malloc(sizeof(char) * size)) == NULL)
 		return (NULL);
-	else
+	str[--size] = 0;
+	while (size-- > 0)
 	{
-		if ((neg = ft_isneg(tmp)) == 1)
-			tmp = -tmp;
-		str[--size] = '\0';
-		while (size != 0)
-		{
-			str[--size] = ((tmp % 10) + '0');
-			tmp = tmp / 10;
-		}
-		if (neg == 1)
-			str[0] = '-';
+		str[size] = n % 10 + '0';
+		n /= 10;
 	}
+	if (neg)
+		str[0] = '-';
 	return (str);
 }

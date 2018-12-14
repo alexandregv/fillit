@@ -6,7 +6,7 @@
 /*   By: aguiot-- <aguiot--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 13:55:24 by aguiot--          #+#    #+#             */
-/*   Updated: 2018/12/12 13:18:48 by achoquel         ###   ########.fr       */
+/*   Updated: 2018/12/14 13:13:55 by aguiot--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,19 @@ void    print_map(char **map)
 		ft_putchar('\n');
 		++y;
 	}
+}
+
+void	free_map(char **map)
+{
+	int y;
+
+	y = 0;
+	while (map[y])
+	{
+		free(map[y]);
+		map[y] = NULL;
+		++y;
+	}
+	free(map);
+	map = NULL;
 }

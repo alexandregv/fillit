@@ -6,14 +6,14 @@
 /*   By: achoquel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 11:19:03 by achoquel          #+#    #+#             */
-/*   Updated: 2018/12/13 16:18:29 by achoquel         ###   ########.fr       */
+/*   Updated: 2018/12/14 13:10:30 by aguiot--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FILLIT_H
 # define FILLIT_H
 
-#include "libft/includes/libft.h"
+#include "libft/libft.h"
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
@@ -39,4 +39,5 @@ void			print_map(char **map);
 int				init_tetri_list(t_tetri tetri_list[], char *tetri_map);
 int				check_tetrimino(char *grid);
 char			**solve(t_tetri tetri_list[], int size);
+void			free_map(char **map);
 #endif
