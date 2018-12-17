@@ -6,7 +6,7 @@
 /*   By: aguiot-- <aguiot--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 13:32:53 by aguiot--          #+#    #+#             */
-/*   Updated: 2018/12/17 11:56:41 by aguiot--         ###   ########.fr       */
+/*   Updated: 2018/12/17 14:39:27 by aguiot--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,11 @@ static int	check_file(int fd, char **tetri_map)
 static int	check_tetrimino(char *map)
 {
 	int	conn;
+	int	parts;
 	int	i;
 
 	conn = 0;
+	parts = 0;
 	i = 0;
 	while (map[i] && i < 16)
 	{
@@ -83,9 +85,12 @@ static int	check_tetrimino(char *map)
 				++conn;
 			if ((i - 4 >= 0) && map[i - 4] == '#')
 				++conn;
+			++parts;
 		}
 		++i;
 	}
+	if (parts != 4)
+	  return (1);
 	return (conn != 6 && conn != 8);
 }
 

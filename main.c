@@ -6,7 +6,7 @@
 /*   By: achoquel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 13:25:51 by achoquel          #+#    #+#             */
-/*   Updated: 2018/12/14 15:29:48 by aguiot--         ###   ########.fr       */
+/*   Updated: 2018/12/17 14:44:06 by aguiot--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,7 @@ int	main(int ac, char **av)
 	if (size > 26)
 		return (error());
 	size = round_sqrt(size * 4);
-	while ((map = solve(tetri_list, size)) == NULL)
-	{
-		free_map(map);
-		++size;
-	}
+	map = solve(tetri_list, size);
 	print_map(map);
 	free_map(map);
 	free(tetri_map);
