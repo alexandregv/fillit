@@ -6,7 +6,7 @@
 /*   By: aguiot-- <aguiot--@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 13:32:53 by aguiot--          #+#    #+#             */
-/*   Updated: 2018/12/17 14:39:27 by aguiot--         ###   ########.fr       */
+/*   Updated: 2018/12/19 14:56:47 by aguiot--         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,9 +89,7 @@ static int	check_tetrimino(char *map)
 		}
 		++i;
 	}
-	if (parts != 4)
-	  return (1);
-	return (conn != 6 && conn != 8);
+	return (!(parts == 4 && (conn == 6 || conn == 8)));
 }
 
 static int	check_all_tetriminos(char *tetri_map)
